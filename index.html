@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Waterloo Hacker House Application</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .header h1 {
+            color: #2d3748;
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        
+        .header p {
+            color: #718096;
+            font-size: 16px;
+        }
+        
+        .time-estimate {
+            background: #f7fafc;
+            padding: 12px 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            text-align: center;
+            color: #4a5568;
+            font-size: 14px;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+        }
+        
+        .section h2 {
+            color: #2d3748;
+            font-size: 20px;
+            margin-bottom: 20px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        
+        .form-group {
+            margin-bottom: 24px;
+        }
+        
+        .form-group label {
+            display: block;
+            color: #2d3748;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 16px;
+        }
+        
+        .required {
+            color: #e53e3e;
+        }
+        
+        .help-text {
+            color: #718096;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+        
+        input[type="text"], 
+        input[type="email"], 
+        input[type="tel"], 
+        input[type="date"],
+        textarea, 
+        select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.2s;
+        }
+        
+        input:focus, 
+        textarea:focus, 
+        select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+        
+        .char-limit {
+            font-size: 12px;
+            color: #a0aec0;
+            text-align: right;
+            margin-top: 4px;
+        }
+        
+        .basic-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+        
+        @media (max-width: 600px) {
+            .basic-info {
+                grid-template-columns: 1fr;
+            }
+            
+            .container {
+                padding: 20px;
+            }
+        }
+        
+        .priority-badge {
+            background: #fed7d7;
+            color: #c53030;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-left: 8px;
+        }
+        
+        .submit-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 16px 32px;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: transform 0.2s;
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 8px;
+        }
+        
+        .radio-option {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .radio-option:hover {
+            border-color: #667eea;
+            background: #f7fafc;
+        }
+        
+        .radio-option input[type="radio"] {
+            width: auto;
+            margin-right: 12px;
+        }
+        
+        .success-message {
+            background: #c6f6d5;
+            color: #2f855a;
+            padding: 16px;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 20px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 Waterloo Hacker House</h1>
+            <p>Live-in accelerator for ambitious builders</p>
+            <div class="time-estimate">⏱️ Time estimate: 4-6 minutes</div>
+        </div>
+
+        <form id="applicationForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+            <!-- Section 1: Contact Info -->
+            <div class="section">
+                <h2>📋 Contact Information</h2>
+                <div class="basic-info">
+                    <div class="form-group">
+                        <label for="name">Full Name <span class="required">*</span></label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email <span class="required">*</span></label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone <span class="required">*</span></label>
+                        <input type="tel" id="phone" name="phone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="location">Current Location <span class="required">*</span></label>
+                        <input type="text" id="location" name="location" placeholder="City, Country" required>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 2: Builder Proof -->
+            <div class="section">
+                <h2>🏆 Builder Credentials</h2>
+                
+                <div class="form-group">
+                    <label for="technical_project">What You've Built <span class="required">*</span><span class="priority-badge">HIGH PRIORITY</span></label>
+                    <div class="help-text">Share your most impressive thing you've built with proof. This can be technical, creative, research,... (GitHub, demo link, etc.)</div>
+                    <textarea id="technical_project" name="technical_project" maxlength="400" required placeholder="Include technologies used and link to see your work..."></textarea>
+                    <div class="char-limit">0/400 characters</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="current_focus">Current Focus <span class="required">*</span><span class="priority-badge">HIGH PRIORITY</span></label>
+                    <div class="help-text">What are you building now? Why this problem? How long have you worked on it?</div>
+                    <textarea id="current_focus" name="current_focus" maxlength="400" required placeholder="We want to see conviction and progress..."></textarea>
+                    <div class="char-limit">0/400 characters</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="fundraising_status">Fundraising Status <span class="required">*</span><span class="priority-badge">HIGH PRIORITY</span></label>
+                    <div class="help-text">Where are you in funding?</div>
+                    <div class="radio-group">
+                        <label class="radio-option">
+                            <input type="radio" name="fundraising_status" value="pre-funding" required>
+                            <span>Pre-funding (idea/prototype)</span>
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="fundraising_status" value="pre-seed" required>
+                            <span>Actively raising pre-seed ($100K-500K)</span>
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="fundraising_status" value="seed" required>
+                            <span>Actively raising seed ($500K-2M)</span>
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="fundraising_status" value="funded" required>
+                            <span>Already funded</span>
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="fundraising_status" value="no-vc" required>
+                            <span>Not seeking VC funding</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="fundraising_challenge">Fundraising Challenge (Optional)</label>
+                    <div class="help-text">If raising: What's your biggest challenge?</div>
+                    <input type="text" id="fundraising_challenge" name="fundraising_challenge" maxlength="200" placeholder="Helps us understand how to help you...">
+                </div>
+
+                <div class="form-group">
+                    <label for="learning_failure">Learning from Failure <span class="required">*</span><span class="priority-badge">HIGH PRIORITY</span></label>
+                    <div class="help-text">Describe a time you had to pivot, fail fast, or change approach. What did you learn?</div>
+                    <textarea id="learning_failure" name="learning_failure" maxlength="350" required placeholder="We want builders who iterate quickly..."></textarea>
+                    <div class="char-limit">0/350 characters</div>
+                </div>
+            </div>
+
+            <!-- Section 3: Community Fit -->
+            <div class="section">
+                <h2>🤝 Community & Logistics</h2>
+                
+                <div class="form-group">
+                    <label for="catalyst_value">Your Catalyst Value <span class="required">*</span><span class="priority-badge">HIGH PRIORITY</span></label>
+                    <div class="help-text">What unique skill/perspective/network would you bring to accelerate others?</div>
+                    <textarea id="catalyst_value" name="catalyst_value" maxlength="250" required placeholder="How do you help other builders succeed?"></textarea>
+                    <div class="char-limit">0/250 characters</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="commitment_level">Commitment Level <span class="required">*</span><span class="priority-badge">HIGH PRIORITY</span></label>
+                    <div class="help-text">What's your availability?</div>
+                    <div class="radio-group">
+                        <label class="radio-option">
+                            <input type="radio" name="commitment_level" value="full-time" required>
+                            <span>Full-time startup focus (40+ hrs/week)</span>
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="commitment_level" value="part-time" required>
+                            <span>Highly engaged part-time (20-40 hrs/week)</span>
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="commitment_level" value="student" required>
+                            <span>Student with significant time (20+ hrs/week)</span>
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="commitment_level" value="other" required>
+                            <span>Other (please specify in referrals section)</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="basic-info">
+                    <div class="form-group">
+                        <label for="move_date">Move-in Date <span class="required">*</span></label>
+                        <input type="date" id="move_date" name="move_date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="rent_comfort">Rent Comfort <span class="required">*</span></label>
+                        <div class="help-text">$1200-1700 CAD/month</div>
+                        <select id="rent_comfort" name="rent_comfort" required>
+                            <option value="">Select...</option>
+                            <option value="no-problem">No problem</option>
+                            <option value="prefer-lower">Prefer lower end</option>
+                            <option value="need-subsidy">Would need partial subsidy</option>
+                            <option value="outside-budget">Outside my budget</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="referrals">Additional Info and Referrals (Optional)</label>
+                    <div class="help-text">Know other great builders? Share their name + why they'd be amazing</div>
+                    <textarea id="referrals" name="referrals" placeholder="Helps us find more top talent..."></textarea>
+                </div>
+            </div>
+
+            <button type="submit" class="submit-btn">🚀 Submit Application</button>
+            
+            <div class="success-message" id="successMessage">
+                ✅ Application submitted successfully! We'll review and contact you within 2 weeks.
+            </div>
+        </form>
+    </div>
+
+    <script>
+        // Character counters
+        const textareas = document.querySelectorAll('textarea[maxlength]');
+        textareas.forEach(textarea => {
+            const charLimit = textarea.nextElementSibling;
+            const maxLength = textarea.getAttribute('maxlength');
+            
+            textarea.addEventListener('input', function() {
+                const currentLength = this.value.length;
+                charLimit.textContent = `${currentLength}/${maxLength} characters`;
+                
+                if (currentLength > maxLength * 0.9) {
+                    charLimit.style.color = '#e53e3e';
+                } else {
+                    charLimit.style.color = '#a0aec0';
+                }
+            });
+        });
+
+        // Form submission
+        document.getElementById('applicationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Show success message
+            document.getElementById('successMessage').style.display = 'block';
+            
+            // Scroll to success message
+            document.getElementById('successMessage').scrollIntoView({ behavior: 'smooth' });
+            
+            // In real implementation, you'd submit to your backend here
+            console.log('Form submitted!', new FormData(this));
+            
+            // Reset form after 3 seconds (optional)
+            setTimeout(() => {
+                this.reset();
+                document.getElementById('successMessage').style.display = 'none';
+                // Update character counters
+                textareas.forEach(textarea => {
+                    const charLimit = textarea.nextElementSibling;
+                    const maxLength = textarea.getAttribute('maxlength');
+                    charLimit.textContent = `0/${maxLength} characters`;
+                });
+            }, 3000);
+        });
+
+        // Set minimum date to today
+        document.getElementById('move_date').min = new Date().toISOString().split('T')[0];
+    </script>
+</body>
+</html>
